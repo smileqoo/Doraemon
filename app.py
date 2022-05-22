@@ -9,9 +9,17 @@ from selenium import webdriver
 app = Flask(__name__)
 
 #selenium先開啟待機
+'''
 option = webdriver.ChromeOptions()
 option.add_argument('headless')
 driver = webdriver.Chrome('..\..\..\爬蟲\Selenium\chromedriver.exe',options=option)
+'''
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless") #無頭模式
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 #訊息建立
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
